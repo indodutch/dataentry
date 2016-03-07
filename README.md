@@ -11,7 +11,7 @@ pip install virtualenv
 virtualenv kmenv
 . kmenv/bin/activate
 ```
-and install the requirements and create an admin:
+and install the requirements:
 ```
 pip install -r requirements.txt
 ```
@@ -31,11 +31,13 @@ It is only available on the current machine. Then enter data on <http://127.0.0.
 
 ## How to modify 
 
-Modify `entry/models.py` and `entry/admin.py` to adjust the database scheme. After modification, run
+Modify `entry/models.py` and `entry/admin.py` to adjust the database scheme. To get sensible names on the web interface for each object, be sure to implement a `__str__` function for all models.
+
+After modification, run
 
 ```
 python manage.py makemigrations entry
-python manage.py sqlmigrate entry [number from previous query]
+python manage.py sqlmigrate entry [number from previous command]
 python manage.py migrate
 python manage.py runserver
 ```
