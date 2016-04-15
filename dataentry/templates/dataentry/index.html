@@ -1,0 +1,54 @@
+{% load staticfiles %}
+
+<html lang="en">
+{% include "head.html" %}
+<body>
+    {% include "navigation-bar.html" %}
+
+	{% include "start.html" %}
+
+	{% include "metadata-section.html" %}
+
+	{% include "break.html" %} 
+
+	{% include "how-to.html" %} 
+
+	{% include "break.html" %}  
+
+	<div class="row text-center">
+		<h1>The (Sub)Experiments</h1>
+	</div>
+	{% include "experiments.html" %} 
+	
+	{% include "break.html" %}
+	
+	<div class="row text-center">
+		<h1>The Drives</h1>
+	</div>
+	{% include "drives.html" %}
+	   
+	{% include "break.html" %}
+	
+	<div class="row text-center">
+		<h1>The Data Sources</h1>
+	</div>
+	{% include "sources.html" %} 
+	
+	{% include "break.html" %}
+	
+	<div class="row text-center">
+		<h1>The Sensors</h1>
+	</div>
+	{% include "sensors.html" %} 
+	
+	{% include "break.html" %}
+
+	{% include "about.html" %} 
+	
+	<!--footer Section -->
+	<div class="for-full-back " id="footer">
+	    The Kumbh Mela Experiment (2016)  
+	</div>
+	<!--End footer Section -->
+</body>
+</html>

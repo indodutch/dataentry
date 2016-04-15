@@ -1,0 +1,34 @@
+ {% load staticfiles %}
+
+    <!-- Tables section --> 
+    <section class="for-full-back color-white" id="sensors">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-8 col-md-offset-2">
+                    <!-- <h1>THE SENSORS</h1> -->
+                    <h4>
+                        <strong> A list of the registered sensors. Click on the link to see the files coming from each of the sensors.  
+                        </strong>
+                    </h4>
+                </div>
+            </div>
+            <div class="row text-center space-pad">
+            {% for sensor in sensors %} 
+                <div class="col-md-2 ">
+                    <div class="about-div2">
+                        <p><img width="50px" height="50px" src={% static 'img/sensor.svg' %} /></p>
+                        <p><a href='/files/sensor{{sensor.id}}'>{{ sensor.id }} | {{ sensor.sensor_type }}</a></p>
+                    </div>
+                </div>
+            {% endfor %}
+            {% for sensor in object_list %} 
+                <div class="col-md-2 ">
+                    <div class="about-div2">
+                        <p><img width="50px" height="50px" src={% static 'img/sensor.svg' %} /></p>
+                        <p><a href='/files/sensor{{sensor.id}}'>{{ sensor.id }} | {{ sensor.sensor_type }}</a></p>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </section>

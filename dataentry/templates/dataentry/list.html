@@ -1,0 +1,48 @@
+{% extends "base.html" %} 
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+	
+<!-- Load the script for visualizing the table --> 
+<script> $(document).ready(function(){ $('#table').dataTable(); }); </script>
+
+<!-- Displaying the table -->
+<div class="table.dataTable">
+<table id="table" class="display", width="100%">
+	<thead>   <!-- header row -->
+		<tr>
+           	{% for field in fields %}
+                {% if field.name == 'id' %}
+					<td><b>ID</b></td>
+                {% else %} 
+                	<td><b>{{ field.verbose_name|title }}</b></td>
+                {% endif %}
+        	{% endfor %}
+        </tr>
+    </thead>
+    <tbody>   <!-- data  -->
+        {% for object in object_list %}
+        	<tr>
+            	{% for field, item in object.items %}
+            		<td>
+						{% if field.name == "id" %} <!-- in case of the id -->
+							<a href='/{{ model_str }}/{{ item.value }}'> {{ item.value|default_if_none:"" }} </a>
+						{% elif field.get_internal_type == "ForeignKey" %} <!-- when ForeignKey, there should be a link -->
+							<a href="/{{ field.name }}/{{ item.id }}">{{ item.value|default_if_none:"" }}</a>
+						{% elif field.get_internal_type == "ManyToManyField" %}
+							 {% for subitem in item.value.all %} 
+            					<a href='/{{ field.name }}/{{ subitem.id }}'>{{ subitem }} </a>
+            					{% if not forloop.last %}, {% endif %}
+        					{% endfor %} 
+						{% else %}
+							{{ item.value|default_if_none:"" }}
+						{% endif %}
+					</td>
+				{% endfor %}
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+</div>
+{% endblock %}

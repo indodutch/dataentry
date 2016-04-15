@@ -1,0 +1,39 @@
+  {% load staticfiles %}
+    <!-- Tables section --> 
+    <section class="for-full-back color-white" id="experiments">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-8 col-md-offset-2">
+                    <!-- <h1>The (Sub)Experiments</h1> -->
+                    <h4>
+                        <strong>All the subexperiments in the Kumbh Mela project. Click on the links to see a list of the files associated with each of the projects.
+                        </strong>
+                    </h4>
+                </div>
+            </div>
+            <div class="row text-center space-pad">
+            {% for experiment in experiments %} 
+                <div class="col-md-2 ">
+                    <div class="about-div">
+                        <p><img width="50px" height="50px" src={% static 'img/beaker.svg' %} /></p>
+                        
+                        <p>
+                        <a href='/files/experiment{{experiment.id}}'>{{ experiment.name }} </a></p>
+                        ({{experiment.number}})
+                    </div>
+                </div>
+            {% endfor %}
+            {% for experiment in object_list %} 
+                <div class="col-md-2 ">
+                    <div class="about-div">
+                        <p><img width="50px" height="50px" src={% static 'img/beaker.svg' %} /></p>
+                        
+                        <p>
+                        <a href='/files/experiment{{experiment.id}}'>{{ experiment.name }} </a></p>
+                        ({{experiment.number}})
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </section>

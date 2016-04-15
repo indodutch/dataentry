@@ -1,0 +1,33 @@
+ {% load staticfiles %}
+ <!-- Tables section --> 
+    <section class="for-full-back color-white" id="drives">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-8 col-md-offset-2">
+                    <!-- <h1>THE DATA DRIVES</h1> -->
+                    <h4>
+                        <strong>Here follows a list of the data drives currently in use. Click on the links to see which files are stored on each one of them.   
+                        </strong>
+                    </h4>
+                </div>
+            </div>
+            <div class="row text-center space-pad">
+            {% for drive in drives.all %} 
+                <div class="col-md-2 ">
+                    <div class="about-div3">
+                        <img width="50px" height="50px" src={% static 'img/hard-drive.svg' %} />
+                        <a href='/files/drive{{drive.id}}'>{{ drive }}</a>
+                    </div>
+                </div>
+            {% endfor %}
+            {% for drive in object_list.all %} 
+                <div class="col-md-2 ">
+                    <div class="about-div3">
+                        <img width="50px" height="50px" src={% static 'img/hard-drive.svg' %} />
+                        <a href='/files/drive{{drive.id}}'>{{ drive }}</a>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </section>

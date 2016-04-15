@@ -1,0 +1,17 @@
+{% load staticfiles %}
+
+<!-- Loads the necessary stylesheets and scripts -->
+<head>
+    <meta charset="utf-8">
+    <title>The Kumbh Mela (Meta)Database</title>
+    <!-- REQUIRED STYLE SHEETS -->
+    <!-- BOOTSTRAP CORE STYLE CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- FONTAWESOME STYLE CSS -->
+    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" />
+        <!-- CUSTOM STYLE CSS -->
+    <link rel="stylesheet" href="{% static 'dataentry/style.css' %}">
+    <!-- DATATABLES SCRIPTS -->
+    <script type="text/javascript" language="javascript" src="{% static 'js/jquery.js'%}"></script>
+    <script type="text/javascript" language="javascript" src="{% static 'js/jquery.dataTables.js' %}"></script>
+</head>

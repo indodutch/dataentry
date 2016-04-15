@@ -1,0 +1,25 @@
+{% extends "base.html" %} 
+
+{% load crispy_forms_tags %}
+{% crispy drive_form drive_form.helper %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+	<form method="POST" class="uniForm">
+		{% csrf_token %}
+		{% crispy form %} 
+	</form>
+
+	<script type="text/javascript">
+	$( document ).ready(function() {
+		$("#id_external").on("change", function(e){
+			if ($("#id_external").is(':checked')) {
+				$(".to_show").hide();
+			} else {
+				$(".to_show").show();
+			}
+		});
+	});
+	</script>
+{% endblock %}

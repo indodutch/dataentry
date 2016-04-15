@@ -1,0 +1,34 @@
+{% extends "base.html" %} 
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+<div class="row text-center">
+	{% for field, item in object.items %}
+		<dl> 
+			<dt> <!-- field name --> 
+				{% if field.name == 'id' %}
+					<td>ID</td>
+                {% else %} 
+                	<td>{{ field.verbose_name|title }}</td>
+                {% endif %}
+			</dt>
+			<dd> <!-- value --> 
+				{% if field.get_internal_type == "ForeignKey" %}
+					<a href="/{{ field.name }}/{{ item.id }}">{{ item.value|default_if_none:"" }}</a>
+				{% else %}
+					{{ item.value|default_if_none:"" }}
+				{% endif %}
+			</dd>
+		</dl>
+	{% endfor %}
+</div>
+
+<div class="row text-center">
+    <div class="col-md-12">
+        <a class="btn btn-danger btn-lg " href="/#tables">Data overview</a>
+    </div>
+</div>
+
+{% endblock %}

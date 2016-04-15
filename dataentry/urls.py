@@ -1,22 +1,19 @@
-"""dataentry URL Configuration
+from django.conf.urls import url
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/1.9/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.conf.urls import url, include
-    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
-"""
-from django.conf.urls import url, include
-from django.contrib import admin
+from . import views 
 
+__author__ = "Louis Dijkstra"
+
+
+
+# list of url patterns
 urlpatterns = [
-    url(r'^entry/', include('entry.urls')),
-    url(r'^admin/', admin.site.urls),
+	url(r'^$', views.index, name='index'),
+	url(r'^(?P<model_str>[\w-]+)/list$', views.view_list, name='list'),
+	url(r'^(?P<model_str>[\w-]+)/(?P<object_id>[0-9]+)$', views.view_detail, name='detail'),
+	url(r'^files/(?P<model_str>[\w-]+)(?P<object_id>[0-9]+)/$', views.view_subset_files, name='list'),
+	url(r'^drive/new/$', views.drive_new, name='drive_new'),
+	url(r'^drive/(?P<pk>[0-9]+)/edit/$', views.drive_edit, name='drive_edit'),
+	url(r'^sensor/new/$', views.sensor_new, name='sensor_new'),
+	# url(r'^sensor/(?P<pk>[0-9]+)/edit/$', views.sensor_edit, name='sensor_edit'),
 ]

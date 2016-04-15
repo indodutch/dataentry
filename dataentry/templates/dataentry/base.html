@@ -1,0 +1,24 @@
+{% load staticfiles %}
+
+<html lang="en">
+{% include "head.html" %}
+<body>
+    {% include "navigation-bar.html" %}
+
+    <!-- Image below the header --> 
+    <section class="for-full-back for-parallax-two" id="Parallax-three">
+        <div class="container"></div>
+    </section>
+    
+    <!-- Title of the page --> 
+    <div class="container">
+        <div class="row text-center">
+            <h1>{% block title %}Title{% endblock %}</h1>
+        </div>
+    </div>
+    
+    <div id="content"> 
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

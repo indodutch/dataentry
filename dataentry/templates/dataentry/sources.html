@@ -1,0 +1,33 @@
+{% load staticfiles %}  
+   <!-- Tables section --> 
+    <section class="for-full-back color-white" id="sources">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-8 col-md-offset-2">
+                    <!-- <h1>THE DATA SOURCES</h1> -->
+                    <h4>
+                        <strong>Our various data sources. Click on the links to see the files for each source. 
+                        </strong>
+                    </h4>
+                </div>
+            </div>
+            <div class="row text-center space-pad">
+            {% for source in sources %} 
+                <div class="col-md-2 ">
+                    <div class="about-div2">
+                        <p><img width="50px" height="50px" src={% static 'img/source.svg' %} /></p>
+                        <p><a href='/files/source{{source.id}}'>{{ source.name }}</a></p>
+                    </div>
+                </div>
+            {% endfor %}
+            {% for source in object_list %} 
+                <div class="col-md-2 ">
+                    <div class="about-div2">
+                        <p><img width="50px" height="50px" src={% static 'img/source.svg' %} /></p>
+                        <p><a href='/files/source{{source.id}}'>{{ source.name }}</a></p>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </section>

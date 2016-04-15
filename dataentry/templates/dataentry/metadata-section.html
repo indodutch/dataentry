@@ -1,0 +1,101 @@
+  {% load staticfiles %}
+  <!-- Tables section --> 
+    <section class="for-full-back color-white" id="tables">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-8 col-md-offset-2">
+                    <h1>THE (META)DATA</h1>
+                    <h4>
+                        <strong>If you want to see the data already present in the database, you can click on any of the following links to inspect the corresponding table.  
+                        </strong>
+                    </h4>
+                </div>
+            </div>
+            
+            <div class="row text-center space-pad">
+
+                <div class="col-md-3 ">
+                    <div class="about-div">
+                        <p><img width="50px" height="50px" src={% static 'img/file.svg' %}/></p>
+                        <h3><a href="/File/list">Files</a></h3>
+                            <p>
+                            All collected data files
+                            </p>
+                    </div>
+                </div>
+                <div class="col-md-3 ">
+                    <div class="about-div">
+                        <p><img width="50px" height="50px" src={% static 'img/format.svg' %} /></p>
+                        <h3><a href='/Format/list'>File Formats</a></h3>
+                            <p>
+                            Descriptions of all file formats
+                            </p>
+                    </div>
+                </div>
+                <div class="col-md-3 ">
+                    <div class="about-div">
+                        <p><img width="50px" height="50px" src={% static 'img/hard-drive.svg' %} /></p>
+                        <h3><a href='/Drive/list'>Unique Drives</a></h3>
+                            <p>
+                            All (unique) data drives
+                            </p>
+                    </div> 
+                </div>
+                <div class="col-md-3 ">
+                    <div class="about-div">
+                        <p><img width="50px" height="50px" src={% static 'img/drivecopy.svg' %}/></p>
+                        <h3><a href='Drivecopy/list'>Drive Copies</a></h3>
+                            <p>
+                            All data drives 
+                            </p>
+                    </div>
+                </div>
+                <div class="col-md-3 ">
+                    <div class="about-div">
+                        <p><img width="50px" height="50px" src={% static 'img/beaker.svg' %} /></p>
+                        <h3><a href='/Experiment/list'>Experiments</a></h3>
+                            <p>
+                            The subexperiments in the project
+                            </p>
+                    </div>
+                </div>
+                <div class="col-md-3 ">
+                    <div class="about-div">
+                        <p><img width="50px" height="50px" src={% static 'img/person.svg' %} /></p>
+                        <h3><a href="/Person/list">People</a> </h3>
+                            <p>
+                            The contact persons 
+                            </p>
+                    </div>
+                </div>
+                <div class="col-md-3 ">
+                    <div class="about-div">
+                        <p><img width="50px" height="50px" src={% static 'img/sensor.svg' %} /></p>
+                        <h3><a href="/Sensor/list">Sensors</a></h3>
+                            <p>
+                            The sensors (e.g., camera's) used 
+                            </p>
+                    </div>
+                </div>
+                <div class="col-md-3 ">
+                    <div class="about-div">
+                        <p><img width="50px" height="50px" src={% static 'img/location.svg' %} /></p>
+                        <h3><a href="/Location/list">Locations</a></h3>
+                            <p>
+                            Important locations at the site 
+                            </p>
+                    </div>
+                </div>
+
+                <div class="col-md-3 ">
+                    <div class="about-div">
+                        <p><img width="50px" height="50px" src={% static 'img/source.svg' %} /></p>
+                        <h3><a href="/Source/list">Data Sources</a></h3>
+                            <p>
+                            Various data sources 
+                            </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
