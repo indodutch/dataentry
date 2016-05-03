@@ -167,6 +167,9 @@ class File(models.Model):
 	drive           = models.ManyToManyField(Drive, 
 							through='StorageLocation',
 							help_text="The drives on which the file is stored.")
+	related_file 	= models.ManyToManyField("self", 
+							blank=True, 
+							help_text="Other related files.")
 	format          = models.ForeignKey(Format,
 							on_delete=models.CASCADE, 
 							blank=True,
