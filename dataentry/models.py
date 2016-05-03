@@ -115,11 +115,14 @@ class Location(models.Model):
 	"""
 		Table/model to represent a (geo)location
 	"""
-	latitude    = models.FloatField(blank=True, help_text="Optional.")
-	longitude   = models.FloatField(blank=True, help_text="Optional.")
+	latitude    = models.FloatField(blank=True, null=True, help_text="Optional.")
+	longitude   = models.FloatField(blank=True, null=True, help_text="Optional.")
 	description = models.TextField(max_length=1000,
 						blank=True,  
 						help_text="Description of the location (optional).")
+
+	def __str__(self): 
+		return self.description
 
 @python_2_unicode_compatible
 class Sensor(models.Model): 
