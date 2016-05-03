@@ -4,8 +4,8 @@ from optparse import OptionParser
 import os
 import sys
 from datetime import datetime
-
 from openpyxl import Workbook, load_workbook
+import sqlite3
 
 __author__ = "Louis Dijkstra"
 
@@ -124,6 +124,10 @@ def main():
 		print("Ok, files are NOT stored.")
 		sys.exit(1)
 
+	# create connection to the sqlite3 database
+	conn = sqlite3.connect('../kumbhmela_db.sqlite3')
+	c = conn.cursor()
+
 	# walk through the GPS excel files in the directory
 	list_of_files = get_xlsx_files(gpsdir)
 
@@ -132,6 +136,9 @@ def main():
 
 		start_time, end_time = get_time_range(file_path)
 		print(start_time, end_time)
+
+		# add the file to the database
+
 
 
 if __name__ == '__main__':
