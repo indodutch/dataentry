@@ -3,9 +3,10 @@ from __future__ import print_function, division
 from optparse import OptionParser
 import os
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 from openpyxl import Workbook, load_workbook
 import sqlite3
+import pytz
 
 __author__ = "Louis Dijkstra"
 
@@ -66,6 +67,8 @@ def get_xlsx_files(path):
 	list_of_files = {}
 	for (dirpath, dirnames, filenames) in os.walk(path):
 		for filename in filenames:
+			if '$' in filename: 
+				continue
 			if filename.endswith('.xlsx'): 
 				list_of_files[filename] = os.sep.join([dirpath, filename])
 	return list_of_files
@@ -96,7 +99,34 @@ def get_time_range(file_path):
 	start_time = datetime.combine(data['C2'].value, data['D2'].value) 
 	last_row   = get_last_line(data)
 	end_time   = datetime.combine(data['C' + str(last_row)].value, data['D' + str(last_row)].value) 
+	
+	# convert to GMT from the local (IST) time
+	start_time = start_time - timedelta(hours=5, minutes=30)
+	end_time   = end_time - timedelta(hours=5, minutes=30)
 	return start_time, end_time
+
+def ask_for_drives(conn): 
+	"""
+		Asks for which drives to add the data. 
+
+		Args:
+			conn - sqlite3 connector to the kumbh mela metadatabase
+	"""
+	cursor = conn.execute("SELECT label, external FROM dataentry_drive")	# get the drives
+
+	print("\n\nSelect the drives:\n")
+	for i, row in enumerate(cursor):
+		if row[1] == "True": 
+			print("(%d)\t%s\t(external)"%(i+1, row[0]))
+		else: 
+			print("(%d)\t%s"%(i+1, row[0]))
+
+	print("\nPlease, fill in the drives on which the files should be stored:")
+	drives = input().lower()
+	drives = drives.split('&')
+
+	return [int(x) for x in drives]
+
 
 def main():
 	parser = OptionParser(usage=usage)
@@ -113,20 +143,30 @@ def main():
 		gpsdir += '/'
 
 	# location of the output directory: 
-	dirname = os.path.abspath(args[1]) 
+	dirname = args[1]
+	if dirname[-1] != '/': 
+		dirname += '/'
 	
 	experiments = [int(x) for x in args[2].split('/')]
 
-	print("Storing the files from %s under the directory name %s"%(gpsdir, dirname))
-	print("Stored under experiment(s): ", experiments)
-
+	# print the input on the screen and ask the user to concur
+	print("Adding GPS data")
+	print("---------------\n")
+	print("path:                 %s"%gpsdir)
+	print("stored in directory:  %s\n"%dirname)
+	print("stored under experiments:\n")
+	for exp in experiments: 
+		print("\t%d"%exp)
+	print("")
+	
 	if not query_yes_no("Are you sure you want to save these files in this directory and under these experiments?"):
-		print("Ok, files are NOT stored.")
+		print("The metadata is NOT stored.")
 		sys.exit(1)
 
 	# create connection to the sqlite3 database
-	conn = sqlite3.connect('../kumbhmela_db.sqlite3')
-	c = conn.cursor()
+	conn = sqlite3.connect('kumbhmela_db.sqlite3')
+
+	drives = ask_for_drives(conn)
 
 	# walk through the GPS excel files in the directory
 	list_of_files = get_xlsx_files(gpsdir)
@@ -137,9 +177,25 @@ def main():
 		start_time, end_time = get_time_range(file_path)
 		print(start_time, end_time)
 
+		cursor = conn.execute('SELECT max(id) FROM dataentry_file')
+		file_id = cursor.fetchone()[0] + 1
+		print("New file id:", file_id)
+
 		# add the file to the database
+		conn.execute("INSERT INTO dataentry_file (id, time_added, start_recording, end_recording, format_id, sensor_id, note) VALUES (?,?,?,?,3,3,?);", [file_id, datetime.now(), start_time, end_time, ''])
 
+		# link the file to the right experiments
+		for exp in experiments: 
+			conn.execute("INSERT INTO dataentry_file_experiment (file_id, experiment_id) VALUES (?, ?);", [file_id, exp])
 
+		# link the file to the rights drives
+		for drive in drives: 
+			drive_path = dirname + file_name
+			conn.execute("INSERT INTO dataentry_storagelocation (path, drive_id, file_id) VALUES (?, ?, ?);", [drive_path, drive, file_id])
+
+	conn.commit() # commit the inserts made	
+	cursor.close()
+	conn.close()
 
 if __name__ == '__main__':
 	sys.exit(main())
